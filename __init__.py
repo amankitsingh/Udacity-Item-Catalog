@@ -35,13 +35,6 @@ CLIENT_ID = json.loads(
     open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Item Catalog"
 
-# Connecting to Database and createing database session
-engine = create_engine('sqlite:///menu.db')
-Base.metadata.bind = engine
-
-DBSession = sessionmaker(bind=engine)
-session = DBSession()
-
 # create a state token to request forgery.
 # store it in the session for later validation
 
