@@ -32,7 +32,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+    open('/var/www/cataog/cataog/client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Item Catalog"
 
 # create a state token to request forgery.
@@ -71,7 +71,7 @@ def gconnect():
 
     try:
         # upgrade the authorization code in credentials object
-        oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
+        oauth_flow = flow_from_clientsecrets('/var/www/catalog/catalog/client_secrets.json', scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
@@ -274,7 +274,7 @@ def newcategories():
         session.commit()
         return redirect(url_for('showcategories'))
     else:
-        return render_template('newCategories.html')
+        return render_template('newcategories.html')
 
 # Edit a categories
 
@@ -376,7 +376,7 @@ def editItems(categories_id, menu_id):
         return redirect(url_for('showMenu', categories_id=categories_id))
     else:
         return render_template(
-            'editItems.html',
+            'edititems.html',
             categories_id=categories_id,
             menu_id=menu_id,
             item=editedItem)
@@ -401,10 +401,10 @@ def deleteItems(categories_id, menu_id):
         flash('Item Successfully Deleted')
         return redirect(url_for('showMenu', categories_id=categories_id))
     else:
-        return render_template('deleteItems.html', item=itemToDelete)
+        return render_template('deleteitems.html', item=itemToDelete)
 
 
 if __name__ == '__main__':
-    app.secret_key = 'super_secret_key'
+    app.secret_key = 'secret'
     app.debug = True
     app.run(host='0.0.0.0', port=8000)
