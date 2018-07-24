@@ -24,15 +24,15 @@ from functools import wraps
 app = Flask(__name__)
 
 # Connecting to Database and createing database session
-#engine = create_engine('sqlite:///menu.db')
-engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
+engine = create_engine('sqlite:///datamenu.db')
+#engine = create_engine('postgresql://catalog:catalog@localhost/catalog')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 CLIENT_ID = json.loads(
-    open('/var/www/cataog/cataog/client_secrets.json', 'r').read())['web']['client_id']
+    open('client_secrets.json', 'r').read())['web']['client_id']
 APPLICATION_NAME = "Item Catalog"
 
 # create a state token to request forgery.
@@ -71,7 +71,7 @@ def gconnect():
 
     try:
         # upgrade the authorization code in credentials object
-        oauth_flow = flow_from_clientsecrets('/var/www/catalog/catalog/client_secrets.json', scope='')
+        oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
         oauth_flow.redirect_uri = 'postmessage'
         credentials = oauth_flow.step2_exchange(code)
     except FlowExchangeError:
