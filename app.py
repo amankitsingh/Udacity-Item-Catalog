@@ -1,6 +1,5 @@
 from flask import Flask, render_template
 from flask import request, redirect, jsonify, url_for, flash
-
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from database import User, Categories, Base, Items
